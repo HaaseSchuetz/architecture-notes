@@ -1,2 +1,2 @@
 # **ML & Data Architecture Repository**
-* Patterns, decisions, and blueprints for scalable AI systems*
+* Patterns, decisions, and blueprints for scalable AI systems
