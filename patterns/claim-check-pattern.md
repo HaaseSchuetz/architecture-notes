@@ -36,8 +36,22 @@ When message payloads exceed these limits, the system cannot process them direct
 
 ## Solution
 
-[ASCII Diagram showing the flow: Producer → Storage → Broker → Consumer]
+```mermaid
+sequenceDiagram
+    participant P as Producer
+    participant S as External Storage
+    participant Q as Message Queue
+    participant C as Consumer
 
+    P->>S: Store large payload
+    S-->>P: Return claim-check ID
+    P->>Q: Send message with claim-check ID
+    Q-->>C: Deliver message with claim-check ID
+    C->>S: Fetch payload using claim-check ID
+    S-->>C: Return payload
+    C->>C: Process payload
+    C->>S: Delete payload (optional)
+```
 ### Implementation Steps
 1. **Producer stores payload** in storage (S3, DB, etc.)
 2. **Generate claim check** - storage returns unique reference
